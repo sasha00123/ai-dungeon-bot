@@ -17,4 +17,4 @@ async def _(msg: Message, ctx):
 
     await ctx.set_state(user_state='ready')
     await ctx.reply(await translate(f"Выбран язык: {lang}", "ru", user_info.language))
-    await ctx.reply(await translate(f"Чтобы начать игру, отправь: ", "ru", user_info.language) + "/play")
+    await ctx.reply((await translate(f"Чтобы начать игру, отправь: ", "ru", user_info.language)) + "/play")

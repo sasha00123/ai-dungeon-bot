@@ -39,7 +39,7 @@ async def _(msg: Message, ctx):
 
     if adventure['died']:
         await ctx.set_state(user_state='ready')
-        await ctx.reply(await translate("Game over. To start again, send: ", "en", user_info.language) + "/play")
+        await ctx.reply((await translate("Game over. To start again, send: ", "en", user_info.language)) + "/play")
 
 
 @plugin.on_commands(commands=['cancel'])
