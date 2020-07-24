@@ -15,8 +15,12 @@ async def _make_request(path, payload=None) -> dict:
     :return: API call result
     """
     async with httpx.AsyncClient() as client:
-        return (await client.post(f"{_BASE_URL}/{path}", json={'folder_id': config.YANDEX_FOLDER_ID, **(payload or {})},
-                                  headers={"Authorization": f"Bearer {config.YANDEX_IAM_TOKEN}"})).json()
+        result = await client.post(f"{_BASE_URL}/{path}",
+                                   json={'folder_id': config.YANDEX_FOLDER_ID, **(payload or {})},
+                                   headers={"Authorization": f"Bearer {config.YANDEX_IAM_TOKEN}"})
+        print(path, payload)
+        print(result.json())
+        return result.json()
 
 
 async def translate(text: str, source_lang: Optional[str], target_lang: str) -> str:
@@ -27,6 +31,8 @@ async def translate(text: str, source_lang: Optional[str], target_lang: str) -> 
     :param target_lang: Language of the output, ISO 639-1 format
     :return: Text in target_lang
     """
+    if not text:
+        return text
     return (await _make_request("translate", {
         'texts': [text],
         'sourceLanguageCode': source_lang,

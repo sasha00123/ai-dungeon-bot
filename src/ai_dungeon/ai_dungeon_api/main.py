@@ -15,7 +15,6 @@ async def _execute_query(query, variables=None, **init_payload):
 
     async with Client(
             transport=transport,
-            fetch_schema_from_transport=True,
     ) as session:
         return await session.execute(gql(query), variable_values=variables or {})
 

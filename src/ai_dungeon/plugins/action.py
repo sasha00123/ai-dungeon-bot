@@ -17,7 +17,8 @@ async def process_actions(ctx, adventure):
         if added:
             new_actions.append(action)
     text = ''.join([action['text'] for action in new_actions])
-    await ctx.reply(await translate(text, "en", user_info.language))
+    if text:
+        await ctx.reply(await translate(text, "en", user_info.language))
     await ctx.set_state(user_state='game')
 
 
