@@ -16,8 +16,8 @@ async def _make_request(path, payload=None) -> dict:
     """
     async with httpx.AsyncClient() as client:
         result = await client.post(f"{_BASE_URL}/{path}",
-                                   json={'folder_id': config.YANDEX_FOLDER_ID, **(payload or {})},
-                                   headers={"Authorization": f"Bearer {config.YANDEX_IAM_TOKEN}"})
+                                   json=payload,
+                                   headers={"Authorization": f"Api-Key {config.YANDEX_IAM_TOKEN}"})
         print(path, payload)
         print(result.json())
         return result.json()

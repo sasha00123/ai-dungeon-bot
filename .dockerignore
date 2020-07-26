@@ -1,3 +1,4 @@
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -139,4 +140,3 @@ cython_debug/
 
 kutana.log
 .idea/
-key.json
