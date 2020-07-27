@@ -9,8 +9,9 @@ Implemented with the help of asyncio, python-gql and kutana
     $ cp .env.example .env               # will need to enter credentials if you want to test
     $ python src/ai_dungeon/main.py
    
-#### Telegram Bot is alive at https://t.me/EndlessAdventuresBot
-#### VK Bot is alive at https://vk.com/aidungeonbot
+Telegram Bot is alive at https://t.me/EndlessAdventuresBot
+
+VK Bot is alive at https://vk.com/aidungeonbot
 
 ### Todo list
 - [x] Anonymous login

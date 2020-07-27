@@ -40,6 +40,11 @@ async def process_scenario(ctx, scenario: dict):
         user_info.options = None
         user_info.prompt = scenario['prompt']
 
+        await ctx.reply((await translate("Создание игры... Для взаимодействия с ботом используйте команды: ", "ru",
+                                         user_info.language)) +
+                        "\n/say <text>, \n/do <text>, \n/story <text>\n/cancel - " + (
+                            await translate("Закончить игру", "ru", user_info.language)))
+
         aid = await create_adventure_from_scenario(user_info, scenario['id'])
         adventure = await get_adventure_info(user_info, aid)
 
