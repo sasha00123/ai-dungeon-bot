@@ -52,3 +52,13 @@ async def _(msg: Message, ctx):
     if ctx.user_state and ctx.user_state != 'language':
         await ctx.set_state(user_state='ready')
         await ctx.reply(await translate("Game over", "en", user_info.language))
+
+
+@plugin.on_any_unprocessed_message(user_state='game')
+async def _(message: Message, ctx):
+    user_info = await get_user_info(ctx)
+    await ctx.reply(
+        (await translate("Бот не знает, как обработать ваше сообщение! Попробуйте использовать одну из команд: ", "ru",
+                         user_info.language)) +
+        "\n/say <text>, \n/do <text>, \n/story <text>\n" +
+        (await translate("Или перезапустить игру при помощи команды ", "ru", user_info.language)) + "/start")
