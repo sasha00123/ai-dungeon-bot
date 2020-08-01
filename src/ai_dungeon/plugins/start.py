@@ -1,8 +1,8 @@
 import asyncio
 
-from ai_dungeon.ai_dungeon_api.main import create_account
 from ai_dungeon.storage.user_info import store_user_info, get_user_info, UserInfo
 from ai_dungeon.translations.yandex import *
+from aidungeonapi import AIDungeonClient
 from kutana import Plugin, Message, Context
 
 plugin = Plugin(name="Start")
@@ -17,8 +17,8 @@ async def _(msg: Message, ctx: Context):
     """
     user_info = (await get_user_info(ctx)) or UserInfo()
 
-    token = await create_account()
-    user_info.token = token
+    client = await AIDungeonClient(debug=True)
+    user_info.token = client.token
     await store_user_info(ctx, user_info)
 
     await ctx.set_state(user_state='language')

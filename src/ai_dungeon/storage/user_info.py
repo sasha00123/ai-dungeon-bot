@@ -38,17 +38,17 @@ async def get_user_info(ctx) -> UserInfo:
                                       f"#info")
 
 
-async def insert_action(ctx, adventure, action) -> bool:
+async def insert_action(ctx, adventure_id, action) -> bool:
     """
     Saves action if wasn't saved previously
     :param ctx: Request Context
-    :param adventure: Id in format "adventure:<id>"
+    :param adventure_id: Id in format "adventure:<id>"
     :param action: Text of the action
     :return: True if new object was created, else False
     """
     action_url = f"user:{ctx.user_uid}" \
                  f"#service:{ctx.backend.get_identity()}" \
-                 f"#adventure:{adventure['id']}" \
+                 f"#adventure:{adventure_id}" \
                  f"#action:{action['id']}"
     if await ctx.app.storage.load(action_url) is None:
         await ctx.app.storage.save(action_url, action['text'])

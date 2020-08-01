@@ -12,6 +12,7 @@ gql = {version = "^3.0.0-alpha.1", allow-prereleases = true}
 kutana = "^4.2.0"
 httpx = "^0.13.3"
 jsonpickle = "^1.4.1"
+aidungeonapi = "^0.0.6"
 
 [tool.poetry.dev-dependencies]
 

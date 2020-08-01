@@ -1,19 +1,19 @@
-from ai_dungeon.ai_dungeon_api.main import adventure_send_action
 from ai_dungeon.storage.user_info import get_user_info, insert_action
 from ai_dungeon.translations.yandex import translate
+from aidungeonapi import AIDungeonClient, AIDungeonAdventure
 from kutana import Plugin, Message
 
 plugin = Plugin(name="Actions")
 
 
-async def process_actions(ctx, adventure):
+async def process_actions(ctx, adventure_id, actions):
     """
         Iterates over actions. Prints newly added actions. Saves to the app storage.
     """
     user_info = await get_user_info(ctx)
     new_actions = []
-    for action in adventure['actions']:
-        added = await insert_action(ctx, adventure, action)
+    for action in actions:
+        added = await insert_action(ctx, adventure_id, action)
         if added:
             new_actions.append(action)
     text = ''.join([action['text'] for action in new_actions])
@@ -30,15 +30,14 @@ async def _(msg: Message, ctx):
     """
     user_info = await get_user_info(ctx)
 
-    adventure = await adventure_send_action(user_info, {
-        'type': ctx.command,
-        'text': await translate(ctx.body, user_info.language, "en"),
-        'id': user_info.adventure
-    })
+    client = await AIDungeonClient(token=user_info.token or '', debug=True)
+    adventure = await AIDungeonAdventure(client, id=user_info.adventure)
 
-    await process_actions(ctx, adventure)
+    await adventure.send_text(await translate(ctx.body, user_info.language, "en"), ctx.command)
 
-    if adventure['died']:
+    await process_actions(ctx, adventure.id, await adventure.obtain_actions())
+
+    if await adventure.obtain_has_died():
         await ctx.set_state(user_state='ready')
         await ctx.reply((await translate("Game over. To start again, send: ", "en", user_info.language)) + "/play")
 

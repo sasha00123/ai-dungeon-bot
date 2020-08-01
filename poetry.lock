@@ -1,5 +1,16 @@
 [[package]]
 category = "main"
+description = "AI Dungeon api for python"
+name = "aidungeonapi"
+optional = false
+python-versions = ">=3.6"
+version = "0.0.6"
+
+[package.dependencies]
+gql = ">=v3.0.0a1"
+
+[[package]]
+category = "main"
 description = "Async http client/server framework (asyncio)"
 name = "aiohttp"
 optional = false
@@ -342,11 +353,15 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9b5810cc4baa3d0023d0bf29fffbf670bae68f640732a13c9f47addeb6f92e0b"
+content-hash = "a942cb623642347df51f121e79be71b2e32c917d42d144731541ef00ef923d84"
 lock-version = "1.0"
 python-versions = "^3.8"
 
 [metadata.files]
+aidungeonapi = [
+    {file = "aidungeonapi-0.0.6-py3-none-any.whl", hash = "sha256:96825637ff42bc9ee4f98fc8a2d07e60fd0920d1f2ee2e2f25696dfe5e5209b1"},
+    {file = "aidungeonapi-0.0.6.tar.gz", hash = "sha256:addb57aee5e926e763501bcc5d6e2d2057c551eb3047afb973de9ad935e0af1c"},
+]
 aiohttp = [
     {file = "aiohttp-3.6.2-cp35-cp35m-macosx_10_13_x86_64.whl", hash = "sha256:1e984191d1ec186881ffaed4581092ba04f7c61582a177b187d3a2f07ed9719e"},
     {file = "aiohttp-3.6.2-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:50aaad128e6ac62e7bf7bd1f0c0a24bc968a0c0590a726d5a955af193544bcec"},
