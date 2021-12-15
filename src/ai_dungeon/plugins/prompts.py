@@ -45,10 +45,10 @@ async def process_scenario(ctx, scenario: dict):
                         "\n/say <text>, \n/do <text>, \n/story <text>\n/cancel - " + (
                             await translate("Закончить игру", "ru", user_info.language)))
 
-        aid = await create_adventure_from_scenario(user_info, scenario['id'])
+        aid = await create_adventure_from_scenario(user_info, scenario)
         adventure = await get_adventure_info(user_info, aid)
 
-        user_info.adventure = adventure['id']
+        user_info.adventure = aid
         await store_user_info(ctx, user_info)
 
         from ai_dungeon.plugins.action import process_actions
@@ -88,6 +88,6 @@ async def _(msg: Message, ctx: Context):
     if option_num > len(user_info.options) or option_num < 1:
         await ctx.reply(await translate("Неверный выбор!", "ru", user_info.language))
         return
-    sid = user_info.options[option_num - 1]['id']
+    sid = user_info.options[option_num - 1]['publicId']
     scenario = await retrieve_scenario(user_info, sid)
     await process_scenario(ctx, scenario)

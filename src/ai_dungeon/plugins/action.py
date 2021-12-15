@@ -1,4 +1,4 @@
-from ai_dungeon.ai_dungeon_api.main import adventure_send_action
+from ai_dungeon.ai_dungeon_api.main import adventure_send_action, get_adventure_info
 from ai_dungeon.storage.user_info import get_user_info, insert_action
 from ai_dungeon.translations.yandex import translate
 from kutana import Plugin, Message
@@ -12,7 +12,7 @@ async def process_actions(ctx, adventure):
     """
     user_info = await get_user_info(ctx)
     new_actions = []
-    for action in adventure['actions']:
+    for action in adventure['actionWindow']:
         added = await insert_action(ctx, adventure, action)
         if added:
             new_actions.append(action)
@@ -30,15 +30,19 @@ async def _(msg: Message, ctx):
     """
     user_info = await get_user_info(ctx)
 
-    adventure = await adventure_send_action(user_info, {
+    await adventure_send_action(user_info, {
+        'characterName': None,
         'type': ctx.command,
         'text': await translate(ctx.body, user_info.language, "en"),
-        'id': user_info.adventure
+        'publicId': user_info.adventure
     })
 
+    adventure = await get_adventure_info(user_info, user_info.adventure)
+    print(adventure)
     await process_actions(ctx, adventure)
 
-    if adventure['died']:
+    # TODO: When the game is over?
+    if False:
         await ctx.set_state(user_state='ready')
         await ctx.reply((await translate("Game over. To start again, send: ", "en", user_info.language)) + "/play")
 
